@@ -1,0 +1,42 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: imagepullsecret-patcher
+
+spec:
+  replicas: 1
+
+  template:
+    spec:
+      serviceAccountName: imagepullsecret-patcher
+
+      containers:
+        - name: server
+          image: imagepullsecret-patcher
+          imagePullPolicy: IfNotPresent
+
+          envFrom:
+            - configMapRef:
+                name: imagepullsecret-patcher
+
+          resources:
+            requests:
+              cpu: "0.1"
+              memory: "64Mi"
+            limits:
+              cpu: "0.5"
+              memory: "512Mi"
+
+          volumeMounts:
+            - name: dockerconfig
+              mountPath: /etc/docker
+              readOnly: true
+
+      volumes:
+        - name: dockerconfig
+          secret:
+            secretName: imagepullsecret-patcher
+
+...
