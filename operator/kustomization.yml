@@ -14,7 +14,6 @@ commonLabels:
 configMapGenerator:
   - name: imagepullsecret-patcher
     literals:
-      - CONFIG_MANAGEDONLY=true
       - CONFIG_FORCE=true
       - CONFIG_ALLSERVICEACCOUNT=true
       - CONFIG_SECRETNAME=imagepullsecret-registry
