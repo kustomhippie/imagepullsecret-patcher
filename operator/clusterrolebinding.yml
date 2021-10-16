@@ -4,6 +4,9 @@ kind: ClusterRoleBinding
 
 metadata:
   name: imagepullsecret-patcher
+  labels:
+    app.kubernetes.io/name: imagepullsecret-patcher
+    app.kubernetes.io/component: operator
 
 roleRef:
   apiGroup: rbac.authorization.k8s.io

@@ -8,15 +8,24 @@ resources:
   - clusterrolebinding.yml
   - deployment.yml
 
-commonLabels:
-  app.kubernetes.io/component: operator
-
 configMapGenerator:
   - name: imagepullsecret-patcher
+    options:
+      labels:
+        app.kubernetes.io/name: imagepullsecret-patcher
+        app.kubernetes.io/component: operator
     literals:
       - CONFIG_FORCE=true
       - CONFIG_ALLSERVICEACCOUNT=true
       - CONFIG_SECRETNAME=imagepullsecret-registry
       - CONFIG_DOCKERCONFIGJSONPATH=/etc/docker/.dockerconfigjson
+
+secretGenerator:
+  - name: imagepullsecret-patcher
+    options:
+      labels:
+        app.kubernetes.io/name: imagepullsecret-patcher
+        app.kubernetes.io/component: operator
+    literals: []
 
 ...
